@@ -1,7 +1,8 @@
 import React from 'react';
 
 interface Props {
-  total: string[];
+  total: number;
+  items: string[];
   perPage: number;
   currentPage: number;
   changePage: (page: number) => void;
@@ -9,21 +10,22 @@ interface Props {
 
 export const Pagination: React.FC<Props> = ({
   total,
+  items,
   perPage,
   currentPage,
   changePage,
 }) => {
-  const quantityPages = Math.ceil(total.length / perPage);
+  const quantityPages = Math.ceil(total / perPage);
   const pages = [];
-  const items = [];
+  const pageItems = [];
 
   const start = (currentPage - 1) * perPage;
-  const end = Math.min(start + perPage, total.length);
+  const end = Math.min(start + perPage, total);
 
   for (let i = start; i < end; i++) {
-    items.push(
+    pageItems.push(
       <li data-cy="item" key={i}>
-        {total[i]}
+        {items[i]}
       </li>,
     );
   }
@@ -76,7 +78,7 @@ export const Pagination: React.FC<Props> = ({
         </li>
       </ul>
 
-      <ul>{items}</ul>
+      <ul>{pageItems}</ul>
     </>
   );
 };
